@@ -116,22 +116,24 @@ a{color:inherit;}
 .chapter-tag{
   display:inline-block; font-family:'JetBrains Mono'; font-size:12px; font-weight:600;
   padding:4px 10px; border-radius:6px; border:2px solid var(--ink); margin-bottom:10px;
-  background:var(--accent-x); color:var(--ink);
+  background:var(--accent-x); color:var(--tag-ink, var(--ink));
 }
 .chapter-head h2{font-size:clamp(1.6rem,3.4vw,2.4rem);}
 .chapter-def{color:var(--muted); font-size:1.05rem; max-width:640px;}
 
-.chapter--history{--accent-x:var(--accent-1); background:#fff5f5;}
-.chapter--need{--accent-x:var(--accent-2); background:#f2f8ff;}
-.chapter--exec{--accent-x:var(--accent-3); background:#fffaf0;}
-.chapter--hoisting{--accent-x:var(--accent-4); background:#f0fdfb;}
-.chapter--tdz{--accent-x:var(--accent-5); background:#f8f3ff;}
-.chapter--scope{--accent-x:var(--accent-6); background:#fff2f6;}
-.chapter--callstack{--accent-x:var(--accent-7); background:#fff4ec;}
-.chapter--window{--accent-x:var(--accent-8); background:#f2f6f9;}
-.chapter--lexical{--accent-x:var(--accent-9); background:#eefbf6;}
-.chapter--callback{--accent-x:var(--accent-10); background:#fff8ec;}
-.chapter--eventloop{--accent-x:var(--accent-11); background:#f6f0ff;}
+/* --tag-ink is set per chapter to whichever of dark ink / light cream
+   actually reads clearly against that chapter's --accent-x badge fill */
+.chapter--history{--accent-x:var(--accent-1); --tag-ink:var(--ink); background:#fff5f5;}
+.chapter--need{--accent-x:var(--accent-2); --tag-ink:#fff; background:#f2f8ff;}
+.chapter--exec{--accent-x:var(--accent-3); --tag-ink:var(--ink); background:#fffaf0;}
+.chapter--hoisting{--accent-x:var(--accent-4); --tag-ink:var(--ink); background:#f0fdfb;}
+.chapter--tdz{--accent-x:var(--accent-5); --tag-ink:#fff; background:#f8f3ff;}
+.chapter--scope{--accent-x:var(--accent-6); --tag-ink:var(--ink); background:#fff2f6;}
+.chapter--callstack{--accent-x:var(--accent-7); --tag-ink:var(--ink); background:#fff4ec;}
+.chapter--window{--accent-x:var(--accent-8); --tag-ink:#fff; background:#f2f6f9;}
+.chapter--lexical{--accent-x:var(--accent-9); --tag-ink:#fff; background:#eefbf6;}
+.chapter--callback{--accent-x:var(--accent-10); --tag-ink:var(--ink); background:#fff8ec;}
+.chapter--eventloop{--accent-x:var(--accent-11); --tag-ink:#fff; background:#f6f0ff;}
 
 /* ============ timeline (history) ============ */
 .timeline{max-width:760px; margin:0 auto; position:relative; padding-left:34px; border-left:3px dashed var(--ink);}

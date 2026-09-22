@@ -24,13 +24,13 @@
 :root{ padding-top: env(safe-area-inset-top,0px); padding-bottom: env(safe-area-inset-bottom,0px); }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; font-size:20px;} /* ~125% base scale — built for projector/seminar-hall viewing */
 body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
   font-family:'Space Grotesk', system-ui, sans-serif;
-  font-size:16px;
+  font-size:1rem;
   line-height:1.5;
 }
 img{max-width:100%;display:block;}
@@ -54,27 +54,27 @@ a{color:inherit;}
   /* scoped dark palette — the rest of the site stays on the fixed light
      "paper" theme, this component alone keeps the original dark look */
   --sb-bg:#161412; --sb-ink:#f4efe4; --sb-muted:#9c9284; --sb-line:#3a352d;
-  position:fixed; top:0; left:0; bottom:0; width:260px;
+  position:fixed; top:0; left:0; bottom:0; width:19rem;
   background:var(--sb-bg); border-right:3px solid var(--ink);
-  overflow-y:auto; z-index:150; padding:20px 14px; color:var(--sb-ink);
+  overflow-y:auto; z-index:150; padding:1.25rem 0.9rem; color:var(--sb-ink);
 }
 .sidebar-brand{display:flex; align-items:center; gap:10px; padding:6px 8px 18px; border-bottom:2px dashed var(--sb-line); margin-bottom:14px;}
 .brand-logo{width:34px; height:34px;}
-.brand-title{font-family:'Baloo 2'; font-weight:800; font-size:15px; line-height:1.1; color:var(--sb-ink);}
-.brand-sub{font-size:11px; color:var(--sb-muted);}
+.brand-title{font-family:'Baloo 2'; font-weight:800; font-size:0.95rem; line-height:1.1; color:var(--sb-ink);}
+.brand-sub{font-size:0.7rem; color:var(--sb-muted);}
 .nav-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px;}
 .nav-list a{
   display:flex; align-items:center; gap:10px; text-decoration:none;
-  padding:9px 10px; border-radius:10px; font-size:13.5px; font-weight:500;
+  padding:0.6rem 0.65rem; border-radius:10px; font-size:0.9rem; font-weight:500;
   color:var(--sb-ink); transition:background .15s, transform .15s;
   border:2px solid transparent;
 }
-.nav-num{font-family:'JetBrains Mono'; font-size:11px; color:var(--sb-muted); width:20px;}
+.nav-num{font-family:'JetBrains Mono'; font-size:0.7rem; color:var(--sb-muted); width:20px;}
 .nav-list a:hover{background:#ffffff0c; transform:translateX(2px);}
 .nav-list a.active{background:#242019; border-color:var(--accent-3); box-shadow:none; font-weight:700;}
 .nav-list a.active .nav-num{color:var(--accent-3);}
 
-#main{margin-left:260px;}
+#main{margin-left:19rem;}
 
 /* ============ hero ============ */
 .hero{
@@ -114,7 +114,7 @@ a{color:inherit;}
 }
 .chapter-head{max-width:760px; margin:0 auto 40px;}
 .chapter-tag{
-  display:inline-block; font-family:'JetBrains Mono'; font-size:12px; font-weight:600;
+  display:inline-block; font-family:'JetBrains Mono'; font-size:0.75rem; font-weight:600;
   padding:4px 10px; border-radius:6px; border:2px solid var(--ink); margin-bottom:10px;
   background:var(--accent-x); color:var(--tag-ink, var(--ink));
 }
@@ -144,7 +144,7 @@ a{color:inherit;}
   padding:18px 20px; box-shadow:var(--shadow); transition:transform .2s;
 }
 .tl-card:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink);}
-.tl-year{display:inline-block; font-family:'JetBrains Mono'; font-weight:700; font-size:12px; background:var(--ink); color:var(--paper); padding:3px 9px; border-radius:5px; margin-bottom:8px;}
+.tl-year{display:inline-block; font-family:'JetBrains Mono'; font-weight:700; font-size:0.75rem; background:var(--ink); color:var(--paper); padding:3px 9px; border-radius:5px; margin-bottom:8px;}
 .tl-card h3{font-size:1.15rem;}
 .tl-card p{margin:.3em 0; font-size:.95rem;}
 .tl-art{margin-top:12px; display:flex; justify-content:center;}
@@ -211,7 +211,7 @@ a{color:inherit;}
   background:#2a2620; color:#f4efe4; padding:8px 14px; font-family:'JetBrains Mono';
   font-size:.75rem; border-bottom:2.5px solid var(--ink);
 }
-.dt-code-body{font-family:'JetBrains Mono'; font-size:.8rem; line-height:1.85; padding:8px 0;}
+.dt-code-body{font-family:'JetBrains Mono'; font-size:.8rem; line-height:1.85; padding:8px 0; overflow-x:auto;}
 .dt-line{display:flex; align-items:center; padding:0 10px; cursor:pointer; white-space:pre;}
 .dt-line:hover .dt-gutter-dot{opacity:.5;}
 .dt-line.is-current{background:#3a3320; box-shadow:inset 3px 0 0 var(--accent-3);}

@@ -16,6 +16,7 @@
   --accent-9:#43aa8b;
   --accent-10:#f8961e;
   --accent-11:#8338ec;
+  --accent-12:#118ab2;
   --radius:14px;
   --shadow: 4px 4px 0 var(--ink);
   --shadow-sm: 2px 2px 0 var(--ink);
@@ -171,6 +172,7 @@ body.sidebar-collapsed #main{margin-left:var(--sb-w-rail);}
 .chapter--window{--accent-x:var(--accent-8); --tag-ink:#fff; background:#f2f6f9;}
 .chapter--lexical{--accent-x:var(--accent-9); --tag-ink:#fff; background:#eefbf6;}
 .chapter--callback{--accent-x:var(--accent-10); --tag-ink:var(--ink); background:#fff8ec;}
+.chapter--thread{--accent-x:var(--accent-12); --tag-ink:#fff; background:#eef8fb;}
 .chapter--eventloop{--accent-x:var(--accent-11); --tag-ink:#fff; background:#f6f0ff;}
 
 /* ============ timeline (history) ============ */

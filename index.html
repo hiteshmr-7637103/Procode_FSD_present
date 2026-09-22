@@ -36,7 +36,8 @@
     <li><a href="#window-object" data-section="window-object"><span class="nav-num">08</span><span class="nav-label">Window Object</span></a></li>
     <li><a href="#lexical" data-section="lexical"><span class="nav-num">09</span><span class="nav-label">Lexical &amp; Scope Chain</span></a></li>
     <li><a href="#callback" data-section="callback"><span class="nav-num">10</span><span class="nav-label">Callback</span></a></li>
-    <li><a href="#event-loop" data-section="event-loop"><span class="nav-num">11</span><span class="nav-label">Event Loop</span></a></li>
+    <li><a href="#single-thread" data-section="single-thread"><span class="nav-num">11</span><span class="nav-label">Single-Threaded</span></a></li>
+    <li><a href="#event-loop" data-section="event-loop"><span class="nav-num">12</span><span class="nav-label">Event Loop</span></a></li>
   </ol>
 </nav>
 
@@ -424,22 +425,21 @@ processInput(greeting);</pre>
   </div>
 </section>
 
-<!-- ============ 11. EVENT LOOP ============ -->
-<section id="event-loop" class="chapter chapter--eventloop" data-accent="11">
+<!-- ============ 11. SYNCHRONOUS & SINGLE-THREADED ============ -->
+<section id="single-thread" class="chapter chapter--thread" data-accent="12">
   <div class="chapter-head">
-    <span class="chapter-tag">Chapter 11 · The Centerpiece</span>
-    <h2>The Event Loop</h2>
-    <p class="chapter-def">JS is single-threaded — the event loop is how it still juggles timers, network calls, and clicks without blocking.</p>
+    <span class="chapter-tag">Chapter 11</span>
+    <h2>Synchronous &amp; Single-Threaded</h2>
+    <p class="chapter-def">JavaScript can only do one thing at a time — this is exactly why "blocking the thread" is a real, visible problem, and exactly why the event loop (next up) has to exist.</p>
   </div>
 
-  <!-- Single-threaded & synchronous primer -->
   <div class="thread-card">
     <div class="thread-card-visual">
       <svg viewBox="0 0 220 90" class="thread-svg" role="img" aria-label="One lane, one car at a time — JS has exactly one call stack and one thread">
         <rect x="4" y="30" width="212" height="34" rx="6" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="6 5"/>
         <text x="110" y="24" text-anchor="middle" font-family="'JetBrains Mono'" font-size="10" fill="var(--muted)">ONE lane. ONE thread. ONE thing at a time.</text>
         <g transform="translate(46,47)">
-          <rect x="-24" y="-10" width="48" height="20" rx="6" fill="var(--accent-11)" stroke="var(--ink)" stroke-width="2"/>
+          <rect x="-24" y="-10" width="48" height="20" rx="6" fill="var(--accent-12)" stroke="var(--ink)" stroke-width="2"/>
           <circle cx="-14" cy="10" r="5" fill="var(--ink)"/>
           <circle cx="14" cy="10" r="5" fill="var(--ink)"/>
         </g>
@@ -471,6 +471,15 @@ while (Date.now() < blockUntil) {
 console.log("End (blocking code finished)");</pre>
     <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
     <p class="snippet-warning">⚠ Heads up: this really does freeze the whole page for ~2 seconds while it runs — that's the point. It proves the queued <code>setTimeout</code> callback can't enter the call stack, no matter how short its delay, until the busy loop above it finishes.</p>
+  </div>
+</section>
+
+<!-- ============ 12. EVENT LOOP ============ -->
+<section id="event-loop" class="chapter chapter--eventloop" data-accent="11">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 12 · The Centerpiece</span>
+    <h2>The Event Loop</h2>
+    <p class="chapter-def">JS is single-threaded — the event loop is how it still juggles timers, network calls, and clicks without blocking.</p>
   </div>
 
   <!-- Web APIs doodle diagram -->

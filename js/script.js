@@ -16,6 +16,7 @@
   var SIDEBAR_COLLAPSE_KEY = 'jsfund-sidebar-collapsed';
   function setSidebarCollapsed(collapsed) {
     sidebar.classList.toggle('collapsed', collapsed);
+    sidebar.classList.remove('hover-preview'); // a fresh click always wins over any stale hover state
     document.body.classList.toggle('sidebar-collapsed', collapsed);
     collapseToggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
     collapseToggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
@@ -24,6 +25,15 @@
   if (collapseToggle) {
     collapseToggle.addEventListener('click', function () {
       setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+    });
+    // mouseenter/mouseleave (not CSS :hover) so the peek-on-hover only
+    // triggers when the pointer newly crosses into the sidebar — not when
+    // it's already resting there the instant the toggle button is clicked
+    sidebar.addEventListener('mouseenter', function () {
+      sidebar.classList.add('hover-preview');
+    });
+    sidebar.addEventListener('mouseleave', function () {
+      sidebar.classList.remove('hover-preview');
     });
     var storedCollapsed = null;
     try { storedCollapsed = localStorage.getItem(SIDEBAR_COLLAPSE_KEY); } catch (e) { /* ignore */ }

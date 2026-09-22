@@ -54,7 +54,7 @@ a{color:inherit;}
   /* scoped dark palette — the rest of the site stays on the fixed light
      "paper" theme, this component alone keeps the original dark look */
   --sb-bg:#161412; --sb-ink:#f4efe4; --sb-muted:#9c9284; --sb-line:#3a352d;
-  --sb-w-full:19rem; --sb-w-rail:3.6rem;
+  --sb-w-full:19rem; --sb-w-rail:3.1rem;
   position:fixed; top:0; left:0; bottom:0; width:var(--sb-w-full);
   background:var(--sb-bg); border-right:3px solid var(--ink);
   overflow-y:auto; overflow-x:hidden; z-index:150; padding:1.25rem 0.9rem; color:var(--sb-ink);
@@ -87,10 +87,15 @@ a{color:inherit;}
 
 /* collapsed rail — icon/number-only, expands as an overlay on hover
    (like ChatGPT/Claude's sidebar) without shifting the page content */
-.sidebar.collapsed{width:var(--sb-w-rail);}
+.sidebar.collapsed{width:var(--sb-w-rail); padding-left:0.5rem; padding-right:0.5rem;}
 .sidebar.collapsed .sidebar-brand-text,
 .sidebar.collapsed .nav-label{opacity:0; max-width:0;}
-.sidebar.collapsed .sidebar-toggle-btn{transform:rotate(180deg);}
+.sidebar.collapsed .sidebar-brand{flex-direction:column; gap:10px; padding-bottom:14px;}
+.sidebar.collapsed .sidebar-toggle-btn{margin-left:0; transform:rotate(180deg);}
+.sidebar.collapsed.hover-preview .sidebar-brand{flex-direction:row; padding-bottom:18px;}
+.sidebar.collapsed .nav-list a{justify-content:center; padding-left:0; padding-right:0; gap:0;}
+.sidebar.collapsed .nav-num{width:auto;}
+.sidebar.collapsed .brand-logo{margin:0 auto;}
 /* .hover-preview is added via JS mouseenter/mouseleave, not CSS :hover —
    a real :hover here would also fire while the pointer is already resting
    on the in-sidebar toggle button at the moment it's clicked, instantly

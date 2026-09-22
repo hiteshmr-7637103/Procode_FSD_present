@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5ec8e0"/>
+      <stop offset="55%" stop-color="#2a7fe0"/>
+      <stop offset="100%" stop-color="#0e3f8f"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="#000000"/>
+
+  <!-- tassel string + bead -->
+  <line x1="40" y1="55" x2="40" y2="122" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="40" cy="130" r="9" fill="url(#g)"/>
+
+  <!-- graduation-cap / cube outline (isometric diamond) -->
+  <path d="M100 32 L160 68 L100 104 L40 68 Z" fill="none" stroke="url(#g)" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M64 88 L100 110 L136 88" fill="none" stroke="url(#g)" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="40" y1="68" x2="64" y2="88" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/>
+  <line x1="160" y1="68" x2="136" y2="88" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- open book / tray -->
+  <path d="M66 118 V150 H134 V118" fill="none" stroke="url(#g)" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

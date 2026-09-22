@@ -33,7 +33,17 @@
     collapseToggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
     try { localStorage.setItem(SIDEBAR_COLLAPSE_KEY, collapsed ? '1' : '0'); } catch (e) { /* private mode etc — ignore */ }
   }
+  var SIDEBAR_DESKTOP_MIN_WIDTH = 900;
+  function syncCollapseToggleVisibility() {
+    if (!collapseToggle) return;
+    // belt-and-suspenders alongside the CSS media query: the collapse
+    // rail is a desktop-only feature, so force-hide the toggle on mobile
+    // even if a stale cached stylesheet would otherwise still show it
+    collapseToggle.style.display = window.innerWidth <= SIDEBAR_DESKTOP_MIN_WIDTH ? 'none' : '';
+  }
   if (collapseToggle) {
+    syncCollapseToggleVisibility();
+    window.addEventListener('resize', syncCollapseToggleVisibility);
     collapseToggle.addEventListener('click', function () {
       setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
     });

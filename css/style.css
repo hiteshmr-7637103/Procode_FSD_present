@@ -100,10 +100,16 @@ a{color:inherit;}
    a real :hover here would also fire while the pointer is already resting
    on the in-sidebar toggle button at the moment it's clicked, instantly
    re-expanding the rail and making the collapse look like it did nothing */
-.sidebar.collapsed.hover-preview{width:var(--sb-w-full); box-shadow:10px 0 30px #0009;}
+.sidebar.collapsed.hover-preview{width:var(--sb-w-full); box-shadow:10px 0 30px #0009; padding-left:0.9rem; padding-right:0.9rem;}
 .sidebar.collapsed.hover-preview .sidebar-brand-text,
 .sidebar.collapsed.hover-preview .nav-label{opacity:1; max-width:14rem;}
 .sidebar.collapsed.hover-preview .sidebar-toggle-btn{transform:rotate(0deg);}
+/* while peeking (hover-preview), the row layout must fully match the
+   normal open sidebar — otherwise labels reappear but stay squashed
+   against the rail-only centered/zero-gap layout underneath them */
+.sidebar.collapsed.hover-preview .nav-list a{justify-content:flex-start; padding-left:0.65rem; padding-right:0.65rem; gap:10px;}
+.sidebar.collapsed.hover-preview .nav-num{width:20px;}
+.sidebar.collapsed.hover-preview .brand-logo{margin:0;}
 
 body.sidebar-collapsed #main{margin-left:var(--sb-w-rail);}
 #main{margin-left:19rem; transition:margin-left .22s ease;}

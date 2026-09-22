@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Fundamentals — The Illustrated Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= SIDEBAR NAV ================= -->
+<button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-brand">
+    <img src="assets/img/js-logo.png" alt="JS logo" class="brand-logo">
+    <div>
+      <div class="brand-title">JS Fundamentals</div>
+      <div class="brand-sub">ProCode Club</div>
+    </div>
+  </div>
+  <ol class="nav-list">
+    <li><a href="#history" data-section="history"><span class="nav-num">01</span>History of JS</a></li>
+    <li><a href="#need" data-section="need"><span class="nav-num">02</span>Need for JS</a></li>
+    <li><a href="#exec-context" data-section="exec-context"><span class="nav-num">03</span>Execution Context</a></li>
+    <li><a href="#hoisting" data-section="hoisting"><span class="nav-num">04</span>Hoisting</a></li>
+    <li><a href="#tdz" data-section="tdz"><span class="nav-num">05</span>Temporal Dead Zone</a></li>
+    <li><a href="#scope" data-section="scope"><span class="nav-num">06</span>Scope of EC</a></li>
+    <li><a href="#call-stack" data-section="call-stack"><span class="nav-num">07</span>Call Stack</a></li>
+    <li><a href="#window-object" data-section="window-object"><span class="nav-num">08</span>Window Object</a></li>
+    <li><a href="#lexical" data-section="lexical"><span class="nav-num">09</span>Lexical &amp; Scope Chain</a></li>
+    <li><a href="#callback" data-section="callback"><span class="nav-num">10</span>Callback</a></li>
+    <li><a href="#event-loop" data-section="event-loop"><span class="nav-num">11</span>Event Loop</a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+<!-- Progress bar -->
+<div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-doodles" aria-hidden="true">
+    <span class="doodle d1">{ }</span>
+    <span class="doodle d2">;</span>
+    <span class="doodle d3">=&gt;</span>
+    <span class="doodle d4">console.log()</span>
+    <span class="doodle d5">const</span>
+  </div>
+  <img src="assets/img/js-logo.png" alt="JavaScript logo" class="hero-logo">
+  <h1>JavaScript Fundamentals</h1>
+  <p class="hero-sub">An illustrated, click-and-run textbook for your first real look under the hood of JS.</p>
+  <a href="#history" class="hero-cta">Start Reading ↓</a>
+</header>
+
+<!-- ============ 1. HISTORY ============ -->
+<section id="history" class="chapter chapter--history" data-accent="1">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 01</span>
+    <h2>The History of JavaScript</h2>
+    <p class="chapter-def">A language written in 10 days, named after a rival, and standardized to stop a war between browsers. Buckle up.</p>
+  </div>
+
+  <div class="timeline">
+
+    <article class="tl-item" data-year="1990">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">1990</span>
+        <h3>The web needed life</h3>
+        <p>Tim Berners-Lee's WorldWideWeb browser exists — but pages are static documents. No buttons that react, no interactivity at all.</p>
+        <div class="tl-art">
+          <svg viewBox="0 0 200 120" class="doodle-svg"><rect x="20" y="15" width="160" height="90" rx="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/><line x1="20" y1="35" x2="180" y2="35" stroke="var(--ink)" stroke-width="3"/><circle cx="32" cy="25" r="3" fill="var(--ink)"/><line x1="35" y1="50" x2="150" y2="50" stroke="var(--ink)" stroke-width="2"/><line x1="35" y1="62" x2="165" y2="62" stroke="var(--ink)" stroke-width="2"/><line x1="35" y1="74" x2="120" y2="74" stroke="var(--ink)" stroke-width="2"/><text x="100" y="95" text-anchor="middle" font-size="10" fill="var(--muted)">static &amp; still</text></svg>
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="1994">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">1994</span>
+        <h3>Netscape dominates</h3>
+        <p>Netscape Navigator holds roughly 80% of the browser market — it's the default way the world sees the web.</p>
+        <div class="tl-art tl-art--photo">
+          <img src="assets/img/netscape-logo.svg" alt="Netscape Navigator logo">
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="1995">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">May 1995</span>
+        <h3>Brendan Eich, 10 days</h3>
+        <p>Netscape hires Brendan Eich to build a scripting language for the browser — under pressure to ship before Microsoft. He builds the first version of JS in about <strong>10 days</strong>.</p>
+        <div class="tl-art tl-art--photo">
+          <img src="assets/img/brendan-eich.jpg" alt="Brendan Eich, creator of JavaScript">
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item tl-item--callout" data-year="1995">
+      <div class="tl-dot"></div>
+      <div class="tl-card sticky-note">
+        <span class="sticky-pin">📌</span>
+        <h3>Fun fact: the name changes THREE times</h3>
+        <p><strong>Mocha → LiveScript → JavaScript.</strong> The final rename was pure marketing — riding on Java's hype — even though JavaScript and Java are almost entirely unrelated languages.</p>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="1996">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">August 1996</span>
+        <h3>Microsoft's JScript</h3>
+        <p>Microsoft reverse-engineers JavaScript for Internet Explorer — but has to call it <strong>JScript</strong>, since Netscape owns the "JavaScript" trademark. Compatibility chaos begins.</p>
+        <div class="tl-art tl-art--photo tl-art--badge">
+          <img src="assets/img/netscape-badge.gif" alt="Best viewed with Netscape retro web badge">
+          <div class="badge-doodle">
+            <svg viewBox="0 0 160 40"><rect x="1" y="1" width="158" height="38" fill="#000" stroke="#0f0" stroke-width="2"/><text x="80" y="17" text-anchor="middle" font-size="9" fill="#0f0" font-family="monospace">BEST VIEWED WITH</text><text x="80" y="30" text-anchor="middle" font-size="10" fill="#0f0" font-family="monospace">INTERNET EXPLORER</text></svg>
+          </div>
+        </div>
+        <p class="caption">The "browser wars" era: sites broke depending on which browser opened them.</p>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="1997">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">1997</span>
+        <h3>ECMA standardization</h3>
+        <p>To end the Netscape-vs-Microsoft mess, JS is submitted to ECMA International as a standard: <strong>ECMA-262 (ECMAScript)</strong>. Simply put — now your code works the same everywhere, no matter which browser runs it.</p>
+        <div class="tl-art">
+          <svg viewBox="0 0 200 100" class="doodle-svg"><rect x="10" y="30" width="50" height="40" rx="4" fill="var(--accent-1)" opacity="0.25" stroke="var(--ink)" stroke-width="2"/><text x="35" y="54" text-anchor="middle" font-size="9">NS</text><rect x="75" y="30" width="50" height="40" rx="4" fill="var(--accent-2)" opacity="0.25" stroke="var(--ink)" stroke-width="2"/><text x="100" y="54" text-anchor="middle" font-size="9">MS</text><path d="M60 50 L75 50" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowh)"/><rect x="140" y="20" width="50" height="60" rx="4" fill="none" stroke="var(--ink)" stroke-width="3" stroke-dasharray="4 3"/><text x="165" y="45" text-anchor="middle" font-size="8">ECMA</text><text x="165" y="58" text-anchor="middle" font-size="8">262</text><defs><marker id="arrowh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs></svg>
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="2005">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">2005</span>
+        <h3>The AJAX era</h3>
+        <p>jQuery and AJAX let pages update data without a full reload. JS starts becoming a real application language, not just a page decorator.</p>
+        <div class="tl-art">
+          <svg viewBox="0 0 200 100" class="doodle-svg"><rect x="20" y="15" width="160" height="70" rx="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/><path d="M60 50 a20 20 0 1 1 40 0" fill="none" stroke="var(--accent-3)" stroke-width="4" stroke-linecap="round"/><path d="M96 42 l4 8 l8 -4" fill="none" stroke="var(--accent-3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="100" y="75" text-anchor="middle" font-size="9" fill="var(--muted)">no reload needed</text></svg>
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="2009">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">2009</span>
+        <h3>Node.js is born</h3>
+        <p>JS escapes the browser and can now run on <strong>servers</strong>. This is the bridge to what you'll learn in the Node.js session on Day 2.</p>
+        <div class="tl-art tl-art--photo">
+          <img src="assets/img/node-logo.svg" alt="Node.js logo">
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item" data-year="2015">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">2015</span>
+        <h3>ES6 / ECMAScript 2015</h3>
+        <p>The big modern overhaul: <code>let</code>/<code>const</code>, arrow functions, promises, classes. Almost everything in this course is built on ES6.</p>
+        <div class="tl-art">
+          <svg viewBox="0 0 200 100" class="doodle-svg"><text x="20" y="35" font-family="monospace" font-size="14" fill="var(--accent-1)">let</text><text x="20" y="55" font-family="monospace" font-size="14" fill="var(--accent-2)">const</text><text x="20" y="75" font-family="monospace" font-size="14" fill="var(--accent-3)">() =&gt;</text><text x="110" y="45" font-family="monospace" font-size="14" fill="var(--accent-4)">class</text><text x="110" y="70" font-family="monospace" font-size="14" fill="var(--ink)">Promise</text></svg>
+        </div>
+      </div>
+    </article>
+
+    <article class="tl-item tl-item--today" data-year="Today">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year">Today</span>
+        <h3>One language, everywhere</h3>
+        <p>JS runs in browsers, servers (Node), mobile apps, and desktop apps. One language, almost everywhere you look. That's why it's worth learning properly — starting now.</p>
+        <div class="tl-art">
+          <svg viewBox="0 0 200 100" class="doodle-svg"><circle cx="100" cy="50" r="35" fill="none" stroke="var(--ink)" stroke-width="3"/><text x="100" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-1)">JS</text><text x="30" y="20" font-size="9">browser</text><text x="145" y="20" font-size="9">server</text><text x="20" y="90" font-size="9">mobile</text><text x="150" y="90" font-size="9">desktop</text></svg>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ 2. NEED FOR JS ============ -->
+<section id="need" class="chapter chapter--need" data-accent="2">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 02</span>
+    <h2>Why Do We Even Need JS?</h2>
+    <p class="chapter-def">HTML gives structure, CSS gives style — but nothing reacts to the user without JavaScript.</p>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-card compare-card--before">
+      <h3>Without JS <span class="tag tag--bad">static</span></h3>
+      <div class="mini-browser">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <button class="fake-btn" id="deadBtn">Click me</button>
+          <p class="fake-note">nothing happens, forever.</p>
+        </div>
+      </div>
+    </div>
+    <div class="compare-arrow">→</div>
+    <div class="compare-card compare-card--after">
+      <h3>With JS <span class="tag tag--good">alive</span></h3>
+      <div class="mini-browser">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <button class="fake-btn fake-btn--live" id="liveBtn">Click me</button>
+          <p class="fake-note" id="liveNote">try it →</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. EXECUTION CONTEXT ============ -->
+<section id="exec-context" class="chapter chapter--exec" data-accent="3">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 03</span>
+    <h2>Execution Context</h2>
+    <p class="chapter-def">Before JS runs a single line, it prepares in two phases: memory first, then execution.</p>
+  </div>
+  <div class="ec-diagram">
+    <div class="ec-phase">
+      <h3>1. Memory Creation Phase</h3>
+      <p>Scans the code and allocates memory for every variable &amp; function <em>before</em> running anything.</p>
+      <div class="ec-box"><code>var name</code><span class="ec-val">→ undefined</span></div>
+      <div class="ec-box"><code>function greet(){}</code><span class="ec-val">→ whole function</span></div>
+    </div>
+    <div class="ec-arrow">then</div>
+    <div class="ec-phase">
+      <h3>2. Execution Phase</h3>
+      <p>Runs code line by line, assigning real values and actually executing calls.</p>
+      <div class="ec-box ec-box--run"><code>name = "John"</code><span class="ec-val">→ "John"</span></div>
+      <div class="ec-box ec-box--run"><code>greet()</code><span class="ec-val">→ runs it</span></div>
+    </div>
+  </div>
+  <div class="snippet" data-snippet-id="ec">
+    <div class="snippet-head"><span>hoisting-setup.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">function greet() {
+  console.log("hi from function");
+}
+console.log(typeof greet); // "function" — hoisted fully
+greet();</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 4. HOISTING ============ -->
+<section id="hoisting" class="chapter chapter--hoisting" data-accent="4">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 04</span>
+    <h2>Hoisting</h2>
+    <p class="chapter-def"><code>var</code> declarations are "hoisted" to the top of their scope and initialized as <code>undefined</code> — before your code even runs.</p>
+  </div>
+  <div class="snippet" data-snippet-id="hoisting">
+    <div class="snippet-head"><span>hoisting.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">console.log(name); // undefined
+var name = "John";
+console.log(name); // John</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 5. TDZ ============ -->
+<section id="tdz" class="chapter chapter--tdz" data-accent="5">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 05</span>
+    <h2>Temporal Dead Zone (TDZ)</h2>
+    <p class="chapter-def"><code>let</code> and <code>const</code> are hoisted too — but stay in a "dead zone" where touching them throws an error, until the line that declares them runs.</p>
+  </div>
+  <div class="snippet" data-snippet-id="tdz">
+    <div class="snippet-head"><span>tdz.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">console.log(age); // ReferenceError
+let age = 25;</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 6. SCOPE OF EC ============ -->
+<section id="scope" class="chapter chapter--scope" data-accent="6">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 06</span>
+    <h2>Scope of an Execution Context</h2>
+    <p class="chapter-def">Every function call creates its own execution context, nested inside the one that called it.</p>
+  </div>
+  <div class="nest-diagram">
+    <div class="nest-box nest-box--global">
+      <span class="nest-label">Global EC</span>
+      <div class="nest-box nest-box--fn">
+        <span class="nest-label">Function EC — outer()</span>
+        <div class="nest-box nest-box--fn2">
+          <span class="nest-label">Function EC — inner()</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. CALL STACK ============ -->
+<section id="call-stack" class="chapter chapter--callstack" data-accent="7">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 07</span>
+    <h2>The Call Stack</h2>
+    <p class="chapter-def">JS keeps track of "where it is" using a stack — functions get pushed on when called, popped off when they return.</p>
+  </div>
+  <p class="dt-hint">A mini "devtools" simulation — click the gutter next to a line to drop a breakpoint, then press <strong>Run</strong>. Step manually any time with Prev/Next.</p>
+  <div class="dt-wrap">
+    <div class="dt-code-panel">
+      <div class="dt-code-head"><span>call-stack-demo.js</span></div>
+      <div class="dt-code-body" id="dtCode"></div>
+    </div>
+    <div class="dt-side">
+      <div class="dt-panel">
+        <h4>Call Stack</h4>
+        <div class="dt-stack" id="csStack"></div>
+      </div>
+      <div class="dt-panel">
+        <h4>Scope <span class="dt-panel-sub">(current variables, innermost first)</span></h4>
+        <div class="dt-scope" id="dtScope"></div>
+      </div>
+    </div>
+  </div>
+  <div class="dt-controls">
+    <button id="csReset" class="cs-btn">⟲ Reset</button>
+    <button id="csPrev" class="cs-btn">← Prev Step</button>
+    <span id="csStepLabel" class="cs-step-label">Step 0 / 0</span>
+    <button id="csNext" class="cs-btn">Next Step →</button>
+    <button id="csRun" class="cs-btn cs-btn--primary">Run ▶ (to next breakpoint)</button>
+  </div>
+  <div class="cs-note" id="csNote">Click "Next Step" or set a breakpoint and press "Run" to start tracing <code>printSquare(5)</code>.</div>
+</section>
+
+<!-- ============ 8. WINDOW OBJECT ============ -->
+<section id="window-object" class="chapter chapter--window" data-accent="8">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 08</span>
+    <h2>The Window Object</h2>
+    <p class="chapter-def">In the browser, everything global — your variables, functions, and the DOM — hangs off one big object: <code>window</code>.</p>
+  </div>
+  <div class="window-diagram">
+    <div class="window-root">window</div>
+    <div class="window-children">
+      <div class="window-child">console</div>
+      <div class="window-child">document</div>
+      <div class="window-child">var myVar</div>
+      <div class="window-child">function myFn()</div>
+      <div class="window-child">alert()</div>
+      <div class="window-child">localStorage</div>
+    </div>
+  </div>
+  <div class="snippet" data-snippet-id="window">
+    <div class="snippet-head"><span>window.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">var greeting = "hi";
+console.log(window.greeting === greeting); // true</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 9. LEXICAL / SCOPE CHAIN ============ -->
+<section id="lexical" class="chapter chapter--lexical" data-accent="9">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 09</span>
+    <h2>Lexical Environment &amp; Scope Chain</h2>
+    <p class="chapter-def">A function can "see" variables from where it was <em>written</em>, by walking up through its parent scopes.</p>
+  </div>
+  <div class="lex-diagram">
+    <div class="lex-box lex-box--1">
+      <span class="lex-label">makeCounter() scope</span>
+      <code>let count</code>
+      <div class="lex-box lex-box--2">
+        <span class="lex-label">returned function scope</span>
+        <code>count++ ← looks up chain</code>
+      </div>
+    </div>
+  </div>
+  <div class="snippet" data-snippet-id="closure">
+    <div class="snippet-head"><span>closure.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">function makeCounter() {
+  let count = 0;
+  return function () {
+    count++;
+    return count;
+  };
+}
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 10. CALLBACK ============ -->
+<section id="callback" class="chapter chapter--callback" data-accent="10">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 10</span>
+    <h2>Callbacks</h2>
+    <p class="chapter-def">A callback is just a function handed to another function, to be called later.</p>
+  </div>
+  <div class="snippet" data-snippet-id="callback">
+    <div class="snippet-head"><span>callback.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">function greeting(name) {
+  console.log("Hello " + name);
+}
+function processInput(callback) {
+  let name = "John";
+  callback(name);
+}
+processInput(greeting);</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+  </div>
+</section>
+
+<!-- ============ 11. EVENT LOOP ============ -->
+<section id="event-loop" class="chapter chapter--eventloop" data-accent="11">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 11 · The Centerpiece</span>
+    <h2>The Event Loop</h2>
+    <p class="chapter-def">JS is single-threaded — the event loop is how it still juggles timers, network calls, and clicks without blocking.</p>
+  </div>
+
+  <!-- Web APIs doodle diagram -->
+  <div class="webapi-diagram">
+    <svg viewBox="0 0 720 260" class="webapi-svg" role="img" aria-label="Diagram: the window object exposes Web APIs like setTimeout, DOM APIs, fetch, console and location, each backed by the browser itself">
+      <rect x="8" y="8" width="704" height="244" rx="14" fill="none" stroke="var(--accent-11)" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <text x="26" y="34" font-family="'Baloo 2'" font-size="15" fill="var(--accent-11)" font-weight="700">BROWSER</text>
+
+      <rect x="30" y="50" width="260" height="190" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/>
+      <text x="46" y="76" font-family="'Baloo 2'" font-size="16" fill="var(--ink)" font-weight="700">Web APIs</text>
+      <rect x="42" y="86" width="80" height="20" rx="4" fill="none" stroke="var(--ink)" stroke-width="2"/>
+      <text x="52" y="100" font-family="'JetBrains Mono'" font-size="10" fill="var(--ink)">window</text>
+
+      <text x="46" y="128" font-family="'JetBrains Mono'" font-size="12" fill="var(--accent-2)">✱ setTimeout()</text>
+      <text x="46" y="152" font-family="'JetBrains Mono'" font-size="12" fill="var(--accent-2)">✱ DOM APIs</text>
+      <text x="46" y="176" font-family="'JetBrains Mono'" font-size="12" fill="var(--accent-2)">✱ fetch()</text>
+      <text x="46" y="200" font-family="'JetBrains Mono'" font-size="12" fill="var(--accent-2)">✱ console</text>
+      <text x="46" y="224" font-family="'JetBrains Mono'" font-size="12" fill="var(--accent-2)">✱ location</text>
+
+      <!-- timer icon -->
+      <g transform="translate(560,60)">
+        <path d="M-16,-20 h32 M-16,20 h32 M-16,-20 L16,20 M16,-20 L-16,20" stroke="var(--muted)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <circle r="4" fill="var(--accent-3)"/>
+      </g>
+      <path d="M122,124 C 300,108 420,90 542,66" stroke="var(--muted)" stroke-width="1.6" fill="none" marker-end="url(#wa-arrow)"/>
+
+      <!-- DOM doc icon -->
+      <g transform="translate(560,124)">
+        <rect x="-20" y="-18" width="40" height="36" rx="3" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <line x1="-12" y1="-8" x2="12" y2="-8" stroke="var(--muted)" stroke-width="1.6"/>
+        <line x1="-12" y1="0" x2="12" y2="0" stroke="var(--muted)" stroke-width="1.6"/>
+        <line x1="-12" y1="8" x2="4" y2="8" stroke="var(--muted)" stroke-width="1.6"/>
+      </g>
+      <path d="M148,148 C 300,148 420,140 542,128" stroke="var(--muted)" stroke-width="1.6" fill="none" marker-end="url(#wa-arrow)"/>
+
+      <!-- server/cloud icon for fetch -->
+      <g transform="translate(560,186)">
+        <rect x="-20" y="-16" width="40" height="12" rx="2" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <rect x="-20" y="-2" width="40" height="12" rx="2" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <rect x="-20" y="12" width="40" height="12" rx="2" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <circle cx="-12" cy="-10" r="1.6" fill="var(--accent-9)"/>
+        <circle cx="-12" cy="4" r="1.6" fill="var(--accent-9)"/>
+        <circle cx="-12" cy="18" r="1.6" fill="var(--accent-9)"/>
+      </g>
+      <path d="M122,172 C 300,180 420,182 542,186" stroke="var(--muted)" stroke-width="1.6" fill="none" marker-end="url(#wa-arrow)"/>
+
+      <!-- console icon -->
+      <g transform="translate(452,224)">
+        <rect x="-70" y="-18" width="140" height="36" rx="4" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <text x="-58" y="6" font-family="'JetBrains Mono'" font-size="11" fill="var(--muted)">&gt; hello world</text>
+      </g>
+      <path d="M122,220 C 220,224 300,224 382,224" stroke="var(--muted)" stroke-width="1.6" fill="none" marker-end="url(#wa-arrow)"/>
+
+      <defs>
+        <marker id="wa-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)"/></marker>
+      </defs>
+    </svg>
+    <p class="webapi-caption">The browser gives JS a toolbox beyond the language itself — <code>setTimeout</code>, DOM APIs, <code>fetch</code>, <code>console</code> and more all live on <code>window</code>, run by the browser, not by the JS engine.</p>
+  </div>
+
+  <p class="dt-hint">The code below is the exact trace driving the diagram underneath it — step through it, or press "Run" here to see the real console output.</p>
+  <div class="el-wrap">
+    <div class="dt-code-panel el-code-panel">
+      <div class="dt-code-head"><span>event-loop.js</span><button id="elCodeRun" class="run-btn">Run ▶</button></div>
+      <div class="dt-code-body" id="elCode"></div>
+      <div class="snippet-output" id="elCodeOutput"><div class="output-placeholder">Click "Run" to see real output</div></div>
+    </div>
+
+    <div class="el-stage">
+      <div class="el-box el-box--stack">
+        <h4>Call Stack</h4>
+        <div class="el-slot" id="elStack"></div>
+      </div>
+      <div class="el-box el-box--webapi">
+        <h4>Web APIs</h4>
+        <div class="el-slot" id="elWebApi"></div>
+      </div>
+      <div class="el-loop">
+        <div class="el-loop-arrow">⟳</div>
+        <span>event loop</span>
+      </div>
+      <div class="el-box el-box--microtask">
+        <h4>Microtask Queue <span class="el-priority">runs first, always drained empty</span></h4>
+        <div class="el-slot" id="elMicrotask"></div>
+      </div>
+      <div class="el-box el-box--queue">
+        <h4>Callback Queue <span class="el-priority el-priority--macro">macrotasks, run after microtasks</span></h4>
+        <div class="el-slot" id="elQueue"></div>
+      </div>
+    </div>
+    <div class="el-controls">
+      <button id="elReset" class="cs-btn">⟲ Reset</button>
+      <button id="elPrev" class="cs-btn">← Prev Step</button>
+      <span id="elStepLabel" class="cs-step-label">Step 0 / 0</span>
+      <button id="elNext" class="cs-btn">Next Step →</button>
+      <button id="elRun" class="cs-btn cs-btn--primary">Run ▶ (trace)</button>
+    </div>
+    <div class="el-note" id="elNote">Click "Next Step" to trace the code above.</div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>Built for the ProCode Coding Club · JS Fundamentals Session</p>
+</footer>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

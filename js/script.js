@@ -2,15 +2,14 @@
   'use strict';
 
   /* ============ initial scroll position ============ */
-  // history.scrollRestoration is set to 'manual' in <head>, so the browser
-  // won't silently jump to wherever you last scrolled on reload. A real
-  // deep link (e.g. sharing a #call-stack URL) still scrolls to that
-  // chapter; a plain reload/open always starts at the hero section.
-  if (window.location.hash) {
-    var target = document.querySelector(window.location.hash);
-    if (target) target.scrollIntoView();
-  } else {
-    window.scrollTo(0, 0);
+  // Every load/reload always starts at the hero section, full stop — no
+  // exception for a URL that happens to carry a #hash from earlier
+  // clicking/scrolling. history.scrollRestoration is set to 'manual' in
+  // <head> (plus an immediate + window-load scrollTo(0,0) there too) to
+  // stop the browser from silently restoring a prior scroll offset.
+  window.scrollTo(0, 0);
+  if (window.history.replaceState) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 
   /* ============ sidebar toggle (mobile) ============ */

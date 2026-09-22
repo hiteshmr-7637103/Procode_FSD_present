@@ -19,23 +19,24 @@
 <nav id="sidebar" class="sidebar">
   <div class="sidebar-brand">
     <img src="assets/img/js-logo.png" alt="JS logo" class="brand-logo">
-    <div>
+    <div class="sidebar-brand-text">
       <div class="brand-title">JS Fundamentals</div>
       <div class="brand-sub">ProCode Club</div>
     </div>
+    <button id="sidebarCollapseToggle" class="sidebar-toggle-btn" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button>
   </div>
   <ol class="nav-list">
-    <li><a href="#history" data-section="history"><span class="nav-num">01</span>History of JS</a></li>
-    <li><a href="#need" data-section="need"><span class="nav-num">02</span>Need for JS</a></li>
-    <li><a href="#exec-context" data-section="exec-context"><span class="nav-num">03</span>Execution Context</a></li>
-    <li><a href="#hoisting" data-section="hoisting"><span class="nav-num">04</span>Hoisting</a></li>
-    <li><a href="#tdz" data-section="tdz"><span class="nav-num">05</span>Temporal Dead Zone</a></li>
-    <li><a href="#scope" data-section="scope"><span class="nav-num">06</span>Scope of EC</a></li>
-    <li><a href="#call-stack" data-section="call-stack"><span class="nav-num">07</span>Call Stack</a></li>
-    <li><a href="#window-object" data-section="window-object"><span class="nav-num">08</span>Window Object</a></li>
-    <li><a href="#lexical" data-section="lexical"><span class="nav-num">09</span>Lexical &amp; Scope Chain</a></li>
-    <li><a href="#callback" data-section="callback"><span class="nav-num">10</span>Callback</a></li>
-    <li><a href="#event-loop" data-section="event-loop"><span class="nav-num">11</span>Event Loop</a></li>
+    <li><a href="#history" data-section="history"><span class="nav-num">01</span><span class="nav-label">History of JS</span></a></li>
+    <li><a href="#need" data-section="need"><span class="nav-num">02</span><span class="nav-label">Need for JS</span></a></li>
+    <li><a href="#exec-context" data-section="exec-context"><span class="nav-num">03</span><span class="nav-label">Execution Context</span></a></li>
+    <li><a href="#hoisting" data-section="hoisting"><span class="nav-num">04</span><span class="nav-label">Hoisting</span></a></li>
+    <li><a href="#tdz" data-section="tdz"><span class="nav-num">05</span><span class="nav-label">Temporal Dead Zone</span></a></li>
+    <li><a href="#scope" data-section="scope"><span class="nav-num">06</span><span class="nav-label">Scope of EC</span></a></li>
+    <li><a href="#call-stack" data-section="call-stack"><span class="nav-num">07</span><span class="nav-label">Call Stack</span></a></li>
+    <li><a href="#window-object" data-section="window-object"><span class="nav-num">08</span><span class="nav-label">Window Object</span></a></li>
+    <li><a href="#lexical" data-section="lexical"><span class="nav-num">09</span><span class="nav-label">Lexical &amp; Scope Chain</span></a></li>
+    <li><a href="#callback" data-section="callback"><span class="nav-num">10</span><span class="nav-label">Callback</span></a></li>
+    <li><a href="#event-loop" data-section="event-loop"><span class="nav-num">11</span><span class="nav-label">Event Loop</span></a></li>
   </ol>
 </nav>
 
@@ -429,6 +430,47 @@ processInput(greeting);</pre>
     <span class="chapter-tag">Chapter 11 · The Centerpiece</span>
     <h2>The Event Loop</h2>
     <p class="chapter-def">JS is single-threaded — the event loop is how it still juggles timers, network calls, and clicks without blocking.</p>
+  </div>
+
+  <!-- Single-threaded & synchronous primer -->
+  <div class="thread-card">
+    <div class="thread-card-visual">
+      <svg viewBox="0 0 220 90" class="thread-svg" role="img" aria-label="One lane, one car at a time — JS has exactly one call stack and one thread">
+        <rect x="4" y="30" width="212" height="34" rx="6" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="6 5"/>
+        <text x="110" y="24" text-anchor="middle" font-family="'JetBrains Mono'" font-size="10" fill="var(--muted)">ONE lane. ONE thread. ONE thing at a time.</text>
+        <g transform="translate(46,47)">
+          <rect x="-24" y="-10" width="48" height="20" rx="6" fill="var(--accent-11)" stroke="var(--ink)" stroke-width="2"/>
+          <circle cx="-14" cy="10" r="5" fill="var(--ink)"/>
+          <circle cx="14" cy="10" r="5" fill="var(--ink)"/>
+        </g>
+        <text x="140" y="52" font-family="'JetBrains Mono'" font-size="11" fill="var(--muted)">…waiting…</text>
+      </svg>
+    </div>
+    <div class="thread-card-text">
+      <h3>JS is synchronous &amp; single-threaded</h3>
+      <p>JavaScript has exactly <strong>one call stack</strong> and runs on <strong>one thread</strong> — it can only do one thing at a time, strictly in order. It can't truly "pause" one task to run another; it has to finish (or hand off) what it's doing first.</p>
+      <p>This is exactly why a <strong>long-running synchronous block "blocks the thread"</strong>: nothing else — not a click, not a scroll, not even a callback sitting in the queue waiting for its turn — can run until the call stack is empty again.</p>
+    </div>
+  </div>
+
+  <div class="snippet" data-snippet-id="blocking">
+    <div class="snippet-head"><span>thread-blocking.js</span><button class="run-btn">Run ▶</button></div>
+    <pre class="snippet-code">console.log("Start");
+
+setTimeout(function () {
+  console.log("This runs later (from the task queue)");
+}, 0);
+
+// a synchronous, blocking operation — busy-waits for ~2 seconds
+const blockUntil = Date.now() + 2000;
+while (Date.now() < blockUntil) {
+  // the single thread is stuck right here.
+  // nothing else can run — not even a 0ms timer callback.
+}
+
+console.log("End (blocking code finished)");</pre>
+    <div class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    <p class="snippet-warning">⚠ Heads up: this really does freeze the whole page for ~2 seconds while it runs — that's the point. It proves the queued <code>setTimeout</code> callback can't enter the call stack, no matter how short its delay, until the busy loop above it finishes.</p>
   </div>
 
   <!-- Web APIs doodle diagram -->

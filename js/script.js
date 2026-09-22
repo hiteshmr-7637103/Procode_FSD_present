@@ -11,6 +11,25 @@
     a.addEventListener('click', function () { sidebar.classList.remove('open'); });
   });
 
+  /* ============ sidebar collapse (desktop, hover-to-expand like ChatGPT/Claude) ============ */
+  var collapseToggle = document.getElementById('sidebarCollapseToggle');
+  var SIDEBAR_COLLAPSE_KEY = 'jsfund-sidebar-collapsed';
+  function setSidebarCollapsed(collapsed) {
+    sidebar.classList.toggle('collapsed', collapsed);
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    collapseToggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    collapseToggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    try { localStorage.setItem(SIDEBAR_COLLAPSE_KEY, collapsed ? '1' : '0'); } catch (e) { /* private mode etc — ignore */ }
+  }
+  if (collapseToggle) {
+    collapseToggle.addEventListener('click', function () {
+      setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+    });
+    var storedCollapsed = null;
+    try { storedCollapsed = localStorage.getItem(SIDEBAR_COLLAPSE_KEY); } catch (e) { /* ignore */ }
+    if (storedCollapsed === '1') setSidebarCollapsed(true);
+  }
+
   /* ============ scroll-spy + progress bar ============ */
   var sections = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-list a'));

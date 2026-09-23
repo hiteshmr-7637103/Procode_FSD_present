@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+  window.addEventListener('load', function () { window.scrollTo(0, 0); });
+</script>
+<title>Building Without a Framework — The Illustrated Guide</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= SIDEBAR NAV ================= -->
+<button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-brand">
+    <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="brand-logo">
+    <div class="sidebar-brand-text">
+      <div class="brand-title">No Framework</div>
+      <div class="brand-sub">ProCode Club</div>
+    </div>
+    <button id="sidebarCollapseToggle" class="sidebar-toggle-btn" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button>
+  </div>
+  <ol class="nav-list">
+    <li><a href="#v-fetch" data-section="v-fetch"><span class="nav-num">01</span><span class="nav-label">Fetching Real Data</span></a></li>
+    <li><a href="#v-filter" data-section="v-filter"><span class="nav-num">02</span><span class="nav-label">Filtering What You Have</span></a></li>
+    <li><a href="#v-delegate" data-section="v-delegate"><span class="nav-num">03</span><span class="nav-label">Delegation, For Real</span></a></li>
+    <li><a href="#v-derived" data-section="v-derived"><span class="nav-num">04</span><span class="nav-label">Derived State</span></a></li>
+    <li><a href="#v-sync" data-section="v-sync"><span class="nav-num">05</span><span class="nav-label">The Sync Problem</span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+<!-- Progress bar -->
+<div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-doodles" aria-hidden="true">
+    <span class="doodle d1">fetch()</span>
+    <span class="doodle d2">.filter()</span>
+    <span class="doodle d3">e.target</span>
+    <span class="doodle d4">total</span>
+    <span class="doodle d5">?!</span>
+  </div>
+  <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="hero-logo">
+  <h1>Building Without a Framework</h1>
+  <p class="hero-sub">One running example — a product list and a cart — built entirely in vanilla JS. By the end, you'll have hit the exact problem React exists to solve.</p>
+  <a href="#v-fetch" class="hero-cta">Start Reading ↓</a>
+</header>
+
+<!-- ============ 1. FETCHING REAL DATA ============ -->
+<section id="v-fetch" class="chapter chapter--vanilla-fetch" data-accent="12">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 01</span>
+    <h2>Fetching Real Data</h2>
+    <p class="chapter-def">Real data doesn't arrive instantly. A page has to show something <em>while</em> waiting, something if it fails, and only treat the data as real once the request actually resolves.</p>
+  </div>
+  <p class="pg-hint">This uses a fake, timed fetch (no real network call, so it works offline). Load the success path, then the error path, and watch the same list element handle both.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="vFetchRender" class="run-btn">Render ▶</button></div>
+      <textarea id="vFetchHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="vFetchFixture">
+            <div id="vFetchList">Click "Run" to load products…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="pg-preset-row">
+        <button id="vFetchLoadSuccess" class="pg-preset-btn">✅ Success path</button>
+        <button id="vFetchLoadError" class="pg-preset-btn">❌ Error path</button>
+      </div>
+      <div class="snippet-head"><span>fetch-products.js</span><button id="vFetchRun" class="run-btn">Run ▶</button></div>
+      <textarea id="vFetchCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="vFetchOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="vFetchReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 2. FILTERING WHAT YOU ALREADY HAVE ============ -->
+<section id="v-filter" class="chapter chapter--vanilla-filter" data-accent="3">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 02</span>
+    <h2>Filtering What You Already Have</h2>
+    <p class="chapter-def">The products are already sitting in a JS array. A search box should filter <em>that array</em> on every keystroke — not re-fetch from the server each time.</p>
+  </div>
+  <p class="pg-hint">Type into the search box below — this is real, live client-side filtering, not a request round-trip.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="vFilterRender" class="run-btn">Render ▶</button></div>
+      <textarea id="vFilterHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="vFilterFixture">
+            <input id="vFilterInput" class="pg-input" placeholder="Search products...">
+            <div id="vFilterList" class="pg-list" style="margin-top:10px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>filter.js</span><button id="vFilterRun" class="run-btn">Run ▶</button></div>
+      <textarea id="vFilterCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="vFilterOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="vFilterReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 3. EVENT DELEGATION, FOR REAL THIS TIME ============ -->
+<section id="v-delegate" class="chapter chapter--vanilla-delegate" data-accent="7">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 03</span>
+    <h2>Event Delegation, For Real This Time</h2>
+    <p class="chapter-def">You already learned this trick in DOM Basics. Here's the scenario that actually forces your hand: this whole list is built dynamically from data — a per-item listener literally can't exist before the item does.</p>
+  </div>
+  <p class="pg-hint">Click "Add to Cart" on any item. Then click <strong>"+ Load More Products"</strong> — a brand-new button appears with no code re-run, and it still works, because the ONE listener lives on the container, not on the buttons.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="vDelegateRender" class="run-btn">Render ▶</button></div>
+      <textarea id="vDelegateHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="vDelegateFixture">
+            <div id="vDelegateList"></div>
+          </div>
+          <div class="pg-row" style="margin-top:12px;">
+            <button id="vDelegateAdd" class="pg-btn">+ Load More Products</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>delegate.js</span><button id="vDelegateRun" class="run-btn">Run ▶</button></div>
+      <textarea id="vDelegateCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="vDelegateOutput" class="snippet-output"><div class="output-placeholder">Click "Run", then click "Add to Cart" above</div></div>
+    </div>
+    <div class="pg-controls"><button id="vDelegateReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 4. DERIVED STATE ============ -->
+<section id="v-derived" class="chapter chapter--vanilla-derived" data-accent="9">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 04</span>
+    <h2>Derived State</h2>
+    <p class="chapter-def">The cart's total isn't stored anywhere — it's <em>computed from</em> the cart every time it renders. Store what changes independently; compute everything else.</p>
+  </div>
+  <p class="pg-hint">Click "+ Add Item" a few times — the total recalculates every time, because it's never stored, only ever computed fresh.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="vDerivedRender" class="run-btn">Render ▶</button></div>
+      <textarea id="vDerivedHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="vDerivedFixture">
+            <div id="vDerivedList" class="pg-list"></div>
+            <p id="vDerivedTotal" class="pg-card" style="margin-top:10px; font-weight:700;"></p>
+          </div>
+          <div class="pg-row" style="margin-top:12px;">
+            <button id="vDerivedAdd" class="pg-btn">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>derived.js</span><button id="vDerivedRun" class="run-btn">Run ▶</button></div>
+      <textarea id="vDerivedCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="vDerivedOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="vDerivedReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>Gotcha: money as integers</h3>
+    <p>Notice prices are stored as <code>priceCents</code> (whole integers), not <code>4.99</code> as a float. <code>0.1 + 0.2 !== 0.3</code> in JS — floating point can't represent most decimals exactly. Store money as integer cents/paise, divide only for display.</p>
+  </div>
+</section>
+
+<!-- ============ 5. THE SYNC PROBLEM ============ -->
+<section id="v-sync" class="chapter chapter--vanilla-sync" data-accent="1">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 05 · Closing</span>
+    <h2>The Sync Problem</h2>
+    <p class="chapter-def">The cart count now needs to show in <strong>two places</strong> — a header badge and the cart panel. One data change, two DOM updates required, and nothing stops you from forgetting one.</p>
+  </div>
+  <p class="pg-hint">Load the broken version and click "+ Add Item" a few times — the cart panel grows correctly, but the badge count silently goes stale. Switch to the correct version — same bug, fixed only by remembering, by hand, every single time.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="vSyncRender" class="run-btn">Render ▶</button></div>
+      <textarea id="vSyncHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="vSyncFixture">
+            <div class="pg-badge-row">Cart <span id="vSyncBadge" class="pg-badge">0</span></div>
+            <div id="vSyncList" class="pg-list"></div>
+          </div>
+          <div class="pg-row" style="margin-top:12px;">
+            <button id="vSyncAdd" class="pg-btn">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="pg-preset-row">
+        <button id="vSyncLoadBroken" class="pg-preset-btn">❌ Broken (badge goes stale)</button>
+        <button id="vSyncLoadCorrect" class="pg-preset-btn">✅ Correct (both updated)</button>
+      </div>
+      <div class="snippet-head"><span>sync.js</span><button id="vSyncRun" class="run-btn">Run ▶</button></div>
+      <textarea id="vSyncCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="vSyncOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="vSyncReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>This is the whole pitch for React</h3>
+    <p>In React, this chapter doesn't exist. You set one piece of state, and <em>every place that reads it</em> just updates — automatically, correctly, every time. That's <a href="react.html#r-hooks"><code>useState</code></a>.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>Built for the ProCode Coding Club · Building Without a Framework Session</p>
+</footer>
+
+</main>
+
+<script src="js/vanilla.js"></script>
+</body>
+</html>

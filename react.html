@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+  window.addEventListener('load', function () { window.scrollTo(0, 0); });
+</script>
+<title>React Basics — The Illustrated Guide</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= SIDEBAR NAV ================= -->
+<button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-brand">
+    <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="brand-logo">
+    <div class="sidebar-brand-text">
+      <div class="brand-title">React Basics</div>
+      <div class="brand-sub">ProCode Club</div>
+    </div>
+    <button id="sidebarCollapseToggle" class="sidebar-toggle-btn" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button>
+  </div>
+  <ol class="nav-list">
+    <li><a href="#r-components" data-section="r-components"><span class="nav-num">01</span><span class="nav-label">Components</span></a></li>
+    <li><a href="#r-jsx" data-section="r-jsx"><span class="nav-num">02</span><span class="nav-label">JSX</span></a></li>
+    <li><a href="#r-vdom" data-section="r-vdom"><span class="nav-num">03</span><span class="nav-label">The Virtual DOM</span></a></li>
+    <li><a href="#r-props" data-section="r-props"><span class="nav-num">04</span><span class="nav-label">Props</span></a></li>
+    <li><a href="#r-hooks" data-section="r-hooks"><span class="nav-num">05</span><span class="nav-label">Hooks</span></a></li>
+    <li><a href="#r-rules" data-section="r-rules"><span class="nav-num">06</span><span class="nav-label">State Rules</span></a></li>
+    <li><a href="#r-events" data-section="r-events"><span class="nav-num">07</span><span class="nav-label">Reacting to the User</span></a></li>
+    <li><a href="#r-fetch" data-section="r-fetch"><span class="nav-num">08</span><span class="nav-label">Fetching Data</span></a></li>
+    <li><a href="#r-lists" data-section="r-lists"><span class="nav-num">09</span><span class="nav-label">Lists &amp; Keys</span></a></li>
+    <li><a href="#r-lift" data-section="r-lift"><span class="nav-num">10</span><span class="nav-label">Lifting State Up</span></a></li>
+    <li><a href="#r-composition" data-section="r-composition"><span class="nav-num">11</span><span class="nav-label">Structuring an App</span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+<!-- Progress bar -->
+<div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-doodles" aria-hidden="true">
+    <span class="doodle d1">&lt;Component /&gt;</span>
+    <span class="doodle d2">useState()</span>
+    <span class="doodle d3">props</span>
+    <span class="doodle d4">{ }</span>
+    <span class="doodle d5">key=</span>
+  </div>
+  <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="hero-logo">
+  <h1>React Basics</h1>
+  <p class="hero-sub">Part 2 taught you to manipulate the DOM by hand. React lets you describe what the UI should look like, and hands the manual work over to it. Every box below runs real React.</p>
+  <a href="#r-components" class="hero-cta">Start Reading ↓</a>
+</header>
+
+<!-- ============ 1. COMPONENTS ============ -->
+<section id="r-components" class="chapter chapter--react-components" data-accent="1">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 01</span>
+    <h2>Components: Functions That Return UI</h2>
+    <p class="chapter-def">A component is just a function. Instead of calling <code>createElement</code> yourself (Part 2), you write a function that <em>returns</em> a description of the UI — and components nest inside each other, forming a tree.</p>
+  </div>
+  <div class="nest-diagram">
+    <div class="nest-box nest-box--global">
+      <span class="nest-label">&lt;App /&gt;</span>
+      <div class="nest-box nest-box--fn">
+        <span class="nest-label">&lt;Greeting /&gt;</span>
+      </div>
+    </div>
+  </div>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>App.jsx</span><button id="rComponentsRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rComponentsCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rComponentsOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rComponentsMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rComponentsReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 2. JSX ============ -->
+<section id="r-jsx" class="chapter chapter--react-jsx" data-accent="2">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 02</span>
+    <h2>JSX Is Just JavaScript</h2>
+    <p class="chapter-def">JSX isn't a new language — it's sugar that compiles to plain <code>React.createElement(...)</code> calls. The curly braces <code>{'{'}...{'}'}</code> just drop back into real JavaScript.</p>
+  </div>
+  <div class="ec-diagram">
+    <div class="ec-phase">
+      <h3>What you write</h3>
+      <div class="ec-box"><code>&lt;h3&gt;Hi, {'{'}name{'}'}&lt;/h3&gt;</code></div>
+    </div>
+    <div class="ec-arrow">compiles to</div>
+    <div class="ec-phase">
+      <h3>What it becomes</h3>
+      <div class="ec-box ec-box--run"><code>React.createElement('h3', null, 'Hi, ', name)</code></div>
+    </div>
+  </div>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>Hello.jsx</span><button id="rJsxRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rJsxCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rJsxOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rJsxMount"></div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-compiled-label">What Babel actually compiled your code to, just now:</div>
+      <pre id="rJsxCompiled" class="snippet-code" style="margin:0;"></pre>
+    </div>
+    <div class="pg-controls"><button id="rJsxReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 3. THE VIRTUAL DOM ============ -->
+<section id="r-vdom" class="chapter chapter--react-vdom" data-accent="9">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 03</span>
+    <h2>The Virtual DOM</h2>
+    <p class="chapter-def">React keeps its own lightweight copy of the tree in memory. When state changes, it builds a <strong>new</strong> virtual tree, diffs it against the old one, and only patches the real DOM where something actually changed.</p>
+  </div>
+  <div class="vdom-compare">
+    <div>
+      <div class="vdom-label">Old virtual tree (count: 0)</div>
+      <div class="tree-panel">
+        <div class="tree-diagram">
+          <div class="tree-node tree-node--root is-in">button</div>
+          <div class="tree-row">
+            <div class="tree-branch"><div class="tree-node tree-node--leaf is-in">"Count: 0"</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="vdom-label">New virtual tree (count: 1)</div>
+      <div class="tree-panel">
+        <div class="tree-diagram">
+          <div class="tree-node tree-node--root is-in">button</div>
+          <div class="tree-row">
+            <div class="tree-branch"><div class="tree-node tree-node--leaf is-in is-active-src">"Count: 1"</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="pg-hint">The <code>button</code> node is identical in both trees, so React leaves it alone — only the changed text node (highlighted) gets patched into the real DOM. Click the real button below and this is exactly what happens, for real.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>Counter.jsx</span><button id="rVdomRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rVdomCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rVdomOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rVdomMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rVdomReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 4. PROPS ============ -->
+<section id="r-props" class="chapter chapter--react-props" data-accent="3">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 04</span>
+    <h2>Props</h2>
+    <p class="chapter-def">Data flows <em>into</em> a component like a function argument — read-only, entirely controlled by whoever renders it.</p>
+  </div>
+  <div class="nest-diagram">
+    <div class="nest-box nest-box--global">
+      <span class="nest-label">&lt;App /&gt; — owns no data itself</span>
+      <div class="nest-box nest-box--fn">
+        <span class="nest-label">&lt;Greeting name="Ada" /&gt; — receives name as a prop</span>
+      </div>
+    </div>
+  </div>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>App.jsx</span><button id="rPropsRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rPropsCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rPropsOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rPropsMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rPropsReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 5. HOOKS ============ -->
+<section id="r-hooks" class="chapter chapter--react-hooks" data-accent="11">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 05 · Centerpiece</span>
+    <h2>Hooks: useState &amp; useEffect</h2>
+    <p class="chapter-def">A Hook is a special function (always starts with <code>use</code>) that lets a plain function component tap into React features it couldn't otherwise have.</p>
+  </div>
+  <div class="ec-diagram">
+    <div class="ec-phase">
+      <h3>useState</h3>
+      <p>Gives a component memory — a value that survives across re-renders.</p>
+    </div>
+    <div class="ec-arrow">+</div>
+    <div class="ec-phase">
+      <h3>useEffect</h3>
+      <p>Runs code AFTER the UI is on screen — timers, subscriptions, fetches.</p>
+    </div>
+  </div>
+  <p class="pg-hint">This example uses both at once: clicking the button changes state (<code>useState</code>), which triggers a re-render, after which <code>useEffect</code> fires and logs it below — real proof of the order things happen in.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>Counter.jsx</span><button id="rHooksRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rHooksCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rHooksOutput" class="snippet-output"><div class="output-placeholder">Click the button in the preview, then watch this console</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rHooksMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rHooksReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 6. STATE RULES ============ -->
+<section id="r-rules" class="chapter chapter--react-staterules" data-accent="1">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 06</span>
+    <h2>Working With State Correctly</h2>
+    <p class="chapter-def">React detects change by comparing <em>references</em>, not deep-inspecting objects. Mutate in place and React never notices — you have to give it a new object.</p>
+  </div>
+  <p class="pg-hint">Click "Add item (broken)" a few times — nothing visibly happens, even though the array technically grew. Then switch to the correct version.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="pg-preset-row">
+        <button id="rRulesLoadBroken" class="pg-preset-btn">❌ Broken (mutates)</button>
+        <button id="rRulesLoadCorrect" class="pg-preset-btn">✅ Correct (copies)</button>
+      </div>
+      <div class="snippet-head"><span>TodoList.jsx</span><button id="rRulesRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rRulesCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rRulesOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rRulesMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rRulesReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>Bonus: derived values</h3>
+    <p>Notice <code>items.length</code> isn't its own state — it's just read directly during render. That's a <strong>derived value</strong>: compute it, don't store it, or it'll drift out of sync.</p>
+  </div>
+</section>
+
+<!-- ============ 7. REACTING TO THE USER ============ -->
+<section id="r-events" class="chapter chapter--react-events" data-accent="6">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 07</span>
+    <h2>Reacting to the User</h2>
+    <p class="chapter-def">Events, controlled inputs, and conditional rendering are really one story: the user does something → state changes → the UI reflects it, including whether something shows at all.</p>
+  </div>
+  <p class="pg-hint">Type in the input below — the input's value is <em>driven by state</em> (a "controlled input"), and the two messages below it use <code>&amp;&amp;</code> and a ternary to decide what to show.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>NameForm.jsx</span><button id="rEventsRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rEventsCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rEventsOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rEventsMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rEventsReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 8. FETCHING DATA ============ -->
+<section id="r-fetch" class="chapter chapter--react-fetch" data-accent="12">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 08</span>
+    <h2>Fetching Data</h2>
+    <p class="chapter-def">Real data doesn't arrive instantly — a component needs three states: loading, error, and success. The UI has to represent all three, not just the happy path.</p>
+  </div>
+  <div class="ec-diagram">
+    <div class="ec-phase"><h3>loading</h3><p>Shown immediately while waiting.</p></div>
+    <div class="ec-arrow">→</div>
+    <div class="ec-phase"><h3>success <em>or</em> error</h3><p>Exactly one of these, once the promise settles.</p></div>
+  </div>
+  <p class="pg-hint">This uses a fake, timed fetch (no real network call, so it works offline) — edit <code>userId={'{'}1{'}'}</code> to <code>userId={'{'}0{'}'}</code> and Run again to see the error path.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>Profile.jsx</span><button id="rFetchRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rFetchCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rFetchOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rFetchMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rFetchReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 9. LISTS, KEYS & RECONCILIATION ============ -->
+<section id="r-lists" class="chapter chapter--react-lists" data-accent="7">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 09 · Centerpiece</span>
+    <h2>Lists, Keys &amp; Reconciliation</h2>
+    <p class="chapter-def">React needs a stable identity per item to know "same item, moved" vs. "new item." An index key lies about that.</p>
+  </div>
+  <p class="pg-hint"><strong>Type something into one of the inputs below</strong> (e.g. the second row), then click <strong>"Remove first item"</strong>. Watch what you typed appear to jump to the wrong row — that's real React, really getting confused by <code>key={'{'}index{'}'}</code>. Then edit the code, change it to <code>key={'{'}item.id{'}'}</code>, and Run again — the bug disappears.</p>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>List.jsx</span><button id="rListsRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rListsCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rListsOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rListsMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rListsReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 10. LIFTING STATE UP ============ -->
+<section id="r-lift" class="chapter chapter--react-lifting" data-accent="5">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 10</span>
+    <h2>Lifting State Up</h2>
+    <p class="chapter-def">When a piece of data needs to be shared, move the state to the closest common parent — data flows down as props, change-requests flow up as functions.</p>
+  </div>
+  <div class="nest-diagram">
+    <div class="nest-box nest-box--global">
+      <span class="nest-label">&lt;App /&gt; — owns celsius state</span>
+      <div class="nest-box nest-box--fn">
+        <span class="nest-label">&lt;TemperatureInput value={'{'}celsius{'}'} onChange={'{'}setCelsius{'}'} /&gt;</span>
+      </div>
+    </div>
+  </div>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>App.jsx</span><button id="rLiftRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rLiftCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rLiftOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rLiftMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rLiftReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+</section>
+
+<!-- ============ 11. STRUCTURING A REAL APP ============ -->
+<section id="r-composition" class="chapter chapter--react-composition" data-accent="10">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 11 · Closing</span>
+    <h2>Structuring a Real App</h2>
+    <p class="chapter-def">Split by responsibility, and put state at the lowest common ancestor that actually needs it — not everything in one giant component, not scattered everywhere either.</p>
+  </div>
+  <div class="nest-diagram">
+    <div class="nest-box nest-box--global">
+      <span class="nest-label">&lt;App /&gt;</span>
+      <div class="nest-siblings">
+        <div class="nest-box nest-box--fn"><span class="nest-label">&lt;Header /&gt;</span></div>
+        <div class="nest-box nest-box--fn"><span class="nest-label">&lt;TodoList /&gt;</span></div>
+        <div class="nest-box nest-box--fn"><span class="nest-label">&lt;Footer /&gt;</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">JSX — edit &amp; run</div>
+      <div class="snippet-head"><span>App.jsx</span><button id="rCompositionRun" class="run-btn">Run ▶</button></div>
+      <textarea id="rCompositionCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="rCompositionOutput" class="snippet-output"><div class="output-placeholder">Console output appears here</div></div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Rendered output</div>
+      <div class="mini-browser pg-fixture pg-mount">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body" id="rCompositionMount"></div>
+      </div>
+    </div>
+    <div class="pg-controls"><button id="rCompositionReset" class="cs-btn">⟲ Reset to starter code</button></div>
+  </div>
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>React DevTools</h3>
+    <p>Install the <strong>React Developer Tools</strong> browser extension — it adds Components and Profiler tabs to your real devtools, showing the live component tree, current props/state, and exactly which components re-rendered and why.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>Built for the ProCode Coding Club · React Basics Session</p>
+</footer>
+
+</main>
+
+<script src="assets/vendor/react.production.min.js"></script>
+<script src="assets/vendor/react-dom.production.min.js"></script>
+<script src="assets/vendor/babel.min.js"></script>
+<script src="js/react.js"></script>
+</body>
+</html>

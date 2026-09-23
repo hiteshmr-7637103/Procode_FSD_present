@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+  window.addEventListener('load', function () { window.scrollTo(0, 0); });
+</script>
+<title>DOM Basics — The Illustrated Guide</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= SIDEBAR NAV ================= -->
+<button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-brand">
+    <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="brand-logo">
+    <div class="sidebar-brand-text">
+      <div class="brand-title">DOM Basics</div>
+      <div class="brand-sub">ProCode Club</div>
+    </div>
+    <button id="sidebarCollapseToggle" class="sidebar-toggle-btn" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button>
+  </div>
+  <ol class="nav-list">
+    <li><a href="#dom-what" data-section="dom-what"><span class="nav-num">01</span><span class="nav-label">The DOM Tree</span></a></li>
+    <li><a href="#dom-select" data-section="dom-select"><span class="nav-num">02</span><span class="nav-label">Selecting Elements</span></a></li>
+    <li><a href="#dom-change" data-section="dom-change"><span class="nav-num">03</span><span class="nav-label">Changing Elements</span></a></li>
+    <li><a href="#dom-create" data-section="dom-create"><span class="nav-num">04</span><span class="nav-label">Creating &amp; Inserting</span></a></li>
+    <li><a href="#dom-events" data-section="dom-events"><span class="nav-num">05</span><span class="nav-label">Events</span></a></li>
+    <li><a href="#dom-delegate" data-section="dom-delegate"><span class="nav-num">06</span><span class="nav-label">Event Delegation</span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+<!-- Progress bar -->
+<div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-doodles" aria-hidden="true">
+    <span class="doodle d1">&lt;div&gt;</span>
+    <span class="doodle d2">.target</span>
+    <span class="doodle d3">querySelector()</span>
+    <span class="doodle d4">append()</span>
+    <span class="doodle d5">addEventListener</span>
+  </div>
+  <img src="assets/img/js-logo.png" alt="ProCode Club logo" class="hero-logo">
+  <h1>DOM Basics</h1>
+  <p class="hero-sub">HTML becomes a live tree of objects the moment the browser loads it — this is how you read it, change it, and react to it. Every box below is a real, editable playground.</p>
+  <a href="#dom-what" class="hero-cta">Start Reading ↓</a>
+</header>
+
+<!-- ============ 1. THE DOM TREE ============ -->
+<section id="dom-what" class="chapter chapter--dom-what" data-accent="1">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 01</span>
+    <h2>The DOM: A Tree of Objects</h2>
+    <p class="chapter-def">The HTML you write is just text. The moment the browser loads it, it becomes a live tree of JS objects in memory — the DOM — and that tree is what you actually read and manipulate.</p>
+  </div>
+  <p class="pg-hint">Edit the HTML on the left and hit <strong>Render</strong> — the tree on the right is built live from whatever you type. Try adding your own nested tags.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Source HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>page.html</span><button id="treeRender" class="run-btn">Render ▶</button></div>
+      <textarea id="treeHtmlCode" class="pg-code" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live tree</div>
+      <div class="tree-panel">
+        <div id="domTree" class="tree-diagram"></div>
+      </div>
+      <div class="pg-controls"><button id="treeReset" class="cs-btn">⟲ Reset to example</button></div>
+    </div>
+  </div>
+
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>Fun fact: "View Source" lies to you</h3>
+    <p><strong>View Source</strong> shows the original HTML file. DevTools' <strong>Elements panel</strong> shows the LIVE DOM — after JS has changed it. Once a script runs, these two can look completely different.</p>
+  </div>
+</section>
+
+<!-- ============ 2. SELECTING ============ -->
+<section id="dom-select" class="chapter chapter--dom-select" data-accent="2">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 02</span>
+    <h2>Selecting Elements</h2>
+    <p class="chapter-def"><code>querySelector</code> returns the first matching node; <code>querySelectorAll</code> returns every match, as a NodeList. Both take any real CSS selector.</p>
+  </div>
+  <p class="pg-hint">Edit the fixture's HTML if you like, then edit the JS and hit <strong>Run</strong> — matched elements actually flash on screen. This is real <code>document.querySelector</code>, not a simulation.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="pgSelectRender" class="run-btn">Render ▶</button></div>
+      <textarea id="pgSelectHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="pgSelectFixture">
+            <ul id="pgSelectList" class="pg-list">
+              <li class="pg-item item">Apples</li>
+              <li class="pg-item item featured">Bananas</li>
+              <li class="pg-item item">Cherries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>selecting.js</span><button id="pgSelectRun" class="run-btn">Run ▶</button></div>
+      <textarea id="pgSelectCode" class="pg-code" spellcheck="false">const first = document.querySelector('.item');
+console.log('first match:', first.textContent);
+
+const all = document.querySelectorAll('.item');
+console.log('matched:', all.length, 'elements');</textarea>
+      <div id="pgSelectOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="pgSelectReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 3. CHANGING ============ -->
+<section id="dom-change" class="chapter chapter--dom-change" data-accent="3">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 03</span>
+    <h2>Changing Elements</h2>
+    <p class="chapter-def">Once you have a reference, four levers do most of the work: <code>textContent</code>/<code>innerHTML</code> for content, <code>classList</code> for CSS state, <code>value</code>/<code>disabled</code> for form controls.</p>
+  </div>
+  <p class="pg-hint">Run the JS and watch the real card below change — every line maps to something you can see happen. You can also edit the fixture's own HTML directly.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="pgChangeRender" class="run-btn">Render ▶</button></div>
+      <textarea id="pgChangeHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="pgChangeCard" class="pg-card">
+            <h4 id="pgTitle">Original Title</h4>
+            <p id="pgPara">Original paragraph text.</p>
+            <div class="pg-row">
+              <input id="pgInput" class="pg-input" value="editable value">
+              <button id="pgBtn" class="pg-btn">Click me</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>changing.js</span><button id="pgChangeRun" class="run-btn">Run ▶</button></div>
+      <textarea id="pgChangeCode" class="pg-code" spellcheck="false">document.getElementById('pgTitle').textContent = 'Changed via textContent!';
+document.getElementById('pgPara').innerHTML = 'Now with <strong>real bold</strong> markup.';
+document.getElementById('pgChangeCard').classList.add('pg-highlight');
+document.getElementById('pgBtn').disabled = true;</textarea>
+      <div id="pgChangeOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="pgChangeReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>Gotcha: innerHTML is dangerous with user input</h3>
+    <p><code>innerHTML</code> parses your string as real HTML. If that string ever comes from a user, that's how you get XSS. Default to <code>textContent</code> unless you truly need markup.</p>
+  </div>
+</section>
+
+<!-- ============ 4. CREATING & INSERTING ============ -->
+<section id="dom-create" class="chapter chapter--dom-create" data-accent="4">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 04</span>
+    <h2>Creating &amp; Inserting</h2>
+    <p class="chapter-def"><code>createElement</code> builds a brand-new node from scratch; <code>append</code> grafts it onto the tree as a real child.</p>
+  </div>
+  <p class="pg-hint">Run it more than once — each run really does append another <code>&lt;li&gt;</code>. That's the whole idea. Edit the starting HTML too, if you like.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="pgCreateRender" class="run-btn">Render ▶</button></div>
+      <textarea id="pgCreateHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="pgCreateFixture">
+            <ul id="pgCreateList" class="pg-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>creating.js</span><button id="pgCreateRun" class="run-btn">Run ▶</button></div>
+      <textarea id="pgCreateCode" class="pg-code" spellcheck="false">const li = document.createElement('li');
+li.className = 'pg-item';
+li.textContent = 'New task';
+document.getElementById('pgCreateList').append(li);</textarea>
+      <div id="pgCreateOutput" class="snippet-output"><div class="output-placeholder">Click "Run" to see output</div></div>
+    </div>
+    <div class="pg-controls"><button id="pgCreateReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 5. EVENTS ============ -->
+<section id="dom-events" class="chapter chapter--dom-events" data-accent="5">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 05</span>
+    <h2>Events</h2>
+    <p class="chapter-def"><code>addEventListener</code> reacts to real user actions. The handler gets an <code>event</code> object — <code>e.target</code> is what was actually clicked, and <code>e.preventDefault()</code> cancels the browser's default behavior.</p>
+  </div>
+  <p class="pg-hint">Run wires up the listeners below — then click the real button and link in the preview to trigger them.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="pgEventsRender" class="run-btn">Render ▶</button></div>
+      <textarea id="pgEventsHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="pgEventsCard" class="pg-card">
+            <p>Click the button, then the link:</p>
+            <div class="pg-row">
+              <button id="pgEventsBtn" class="pg-btn">Click me</button>
+              <a id="pgLink" class="pg-link" href="#pgEventsCard">Visit example.com →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="snippet-head"><span>events.js</span><button id="pgEventsRun" class="run-btn">Run ▶</button></div>
+      <textarea id="pgEventsCode" class="pg-code" spellcheck="false">document.getElementById('pgEventsBtn').addEventListener('click', function (e) {
+  console.log('type:', e.type);
+  console.log('target:', e.target.tagName);
+});
+
+document.getElementById('pgLink').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('Link clicked — default navigation prevented.');
+});</textarea>
+      <div id="pgEventsOutput" class="snippet-output"><div class="output-placeholder">Click "Run", then click the button/link above</div></div>
+    </div>
+    <div class="pg-controls"><button id="pgEventsReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+</section>
+
+<!-- ============ 6. EVENT DELEGATION ============ -->
+<section id="dom-delegate" class="chapter chapter--dom-delegate" data-accent="11">
+  <div class="chapter-head">
+    <span class="chapter-tag">Chapter 06 · The Centerpiece</span>
+    <h2>Event Delegation</h2>
+    <p class="chapter-def">Instead of a listener per item, attach ONE listener to the parent and use <code>e.target</code> to figure out which child fired it. It also covers items that don't exist yet.</p>
+  </div>
+  <p class="pg-hint"><strong>Run</strong> wires up whichever version is loaded below (it never touches existing listeners on other items — see the fixture HTML if curious). Click list items to test — then click <strong>"+ Add Item"</strong> and click the NEW item to see the real difference.</p>
+
+  <div class="pg-stack">
+    <div class="pg-block">
+      <div class="pg-block-label">Fixture HTML — edit &amp; render</div>
+      <div class="snippet-head"><span>fixture.html</span><button id="pgDelRender" class="run-btn">Render ▶</button></div>
+      <textarea id="pgDelHtml" class="pg-code pg-code--html" spellcheck="false"></textarea>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">Live preview</div>
+      <div class="mini-browser pg-fixture">
+        <div class="mini-browser-bar"><span></span><span></span><span></span></div>
+        <div class="mini-browser-body">
+          <div id="pgDelFixture">
+            <ul id="pgDelList" class="pg-list">
+              <li class="pg-item">Item 1</li>
+              <li class="pg-item">Item 2</li>
+              <li class="pg-item">Item 3</li>
+            </ul>
+          </div>
+          <div class="pg-row" style="margin-top:12px;">
+            <button id="pgDelAdd" class="pg-btn">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pg-block">
+      <div class="pg-block-label">JavaScript — edit &amp; run</div>
+      <div class="pg-preset-row">
+        <button id="pgDelLoadNo" class="pg-preset-btn">❌ No delegation</button>
+        <button id="pgDelLoadYes" class="pg-preset-btn">✅ With delegation</button>
+      </div>
+      <div class="snippet-head"><span>delegation.js</span><button id="pgDelRun" class="run-btn">Run ▶</button></div>
+      <textarea id="pgDelCode" class="pg-code" spellcheck="false"></textarea>
+      <div id="pgDelOutput" class="snippet-output"><div class="output-placeholder">Click "Run", then click list items above</div></div>
+    </div>
+    <div class="pg-controls"><button id="pgDelReset" class="cs-btn">⟲ Reset everything</button></div>
+  </div>
+
+  <div class="tl-card sticky-note" style="max-width:640px; margin:0 auto;">
+    <span class="sticky-pin">📌</span>
+    <h3>Fun fact</h3>
+    <p>React uses exactly this trick internally — one listener at the root of your whole app, for every click anywhere in it.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>Built for the ProCode Coding Club · DOM Basics Session</p>
+</footer>
+
+</main>
+
+<script src="js/dom.js"></script>
+</body>
+</html>
